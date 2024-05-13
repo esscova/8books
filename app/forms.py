@@ -48,6 +48,7 @@ class LoginForm(FlaskForm):
 class BookForm(FlaskForm):
     autor = StringField('Autor', validators=[DataRequired()])
     titulo = StringField('Título', validators=[DataRequired()])
+    categoria = StringField('Gênero', validators=[DataRequired()])
     descricao = TextAreaField('Descrição', validators=[DataRequired()])
     rate = SelectField('Classificação', validators=[DataRequired()])
     btnSubmit = SubmitField('Cadastrar')
@@ -56,6 +57,7 @@ class BookForm(FlaskForm):
         book = Books(
             autor = self.autor.data,
             titulo = self.titulo.data,
+            categoria=self.categoria.data,
             descricao=self.descricao.data,
             rate=self.rate.data
         )

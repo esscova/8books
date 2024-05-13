@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for
 
 @app.route('/', methods=['GET','POST'])
 def index ():
-    return render_template('index.html')
+    return render_template('home/index.html')
 
 # create endpoint
 @app.route('/cadastrar/', methods=['GET', 'POST'])
@@ -41,7 +41,7 @@ def login ():
 @app.route('/home/')
 @login_required
 def home ():
-    return render_template('home.html', user=current_user)
+    return render_template('users/index.html', user=current_user)
 
 # logout endpoint
 @app.route('/sair/')

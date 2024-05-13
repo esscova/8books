@@ -21,5 +21,3 @@ class Books (db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('Users', backref = 'books')
-
-    __table_args__ = (db.CheckConstraint('rate >= 1 AND <= 5', name = 'check_rate_range'),)
