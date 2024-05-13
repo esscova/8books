@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} 9Books - Home {% endblock %}
+
+{% block nav %}
+
+    {% include './_partials/nav.html'%}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+    <section class="container mt-5 py-5">
+
+        <div class="d-flex justify-content-center mb-3">
+            <form class="w-50 me-3" role="search">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
+        </div>
+        
+        <a href="#" class="btn btn-secondary">Adicionar livro</a>
+    </section>
+
+
+
+{% endblock %}
