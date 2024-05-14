@@ -12,17 +12,55 @@
 
 
     <section class="container mt-5 py-5">
-
-        <div class="d-flex justify-content-center mb-3">
+        <div id="teste" style="width: 640px;"></div>
+    
+         <div class="d-flex justify-content-center mb-3">
             <form class="w-50 me-3" role="search">
                 <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
             </form>
         </div>
+
+        <div class="my-2">
+            <h2 class="mb-3 text-center">livros</h2>
+            <a href="#" class="btn btn-secondary" hx-get="{{url_for('add_books')}}" hx-target="#teste" >Adicionar livro</a>
+            <hr>
+        </div>
         
-        <a href="#" class="btn btn-secondary" hx-get="{{url_for('add_books')}}" hx-target="#teste" >Adicionar livro</a>
+
+        
+        <table class="table text-align-center">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Gênero</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Classificação</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for book in books %}
+                        <td>{{ book.id }}</td>
+                        <td>{{ book.titulo }}</td>
+                        <td>{{ book.autor }}</td>
+                        <td>{{ book.categoria }}</td>
+                        <td>{{ book.descricao }}</td>
+                        <td>{{ book.rate }}</td>
+                        <td>
+                            <a href="#" class="btn btn-warning">Edit</a>
+                            <a href="#" class="btn btn-danger">Del</a>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+        
     </section>
 
-    <div id="teste" style="width: 640px;"></div>
+    
 
 
 

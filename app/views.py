@@ -1,7 +1,8 @@
-from app import app
-from app.forms import UserForm, LoginForm, BookForm
-from extensions import login_user, login_required, logout_user, current_user
 from flask import render_template, redirect, url_for
+from app import app
+from extensions import login_user, login_required, logout_user, current_user
+from app.forms import UserForm, LoginForm, BookForm
+from .services import BookService
 
 @app.route('/', methods=['GET','POST'])
 def index ():
@@ -38,10 +39,12 @@ def login ():
     return render_template('_partials/form-login.html', form=form)
 
 # user home endpoint
-@app.route('/home/')
+@app.route('/home/', methods=['GET','POST'])
 @login_required
 def home ():
-    return render_template('users/index.html', user=current_user)
+    book_service = BookService()
+    books = book_service.get_books(current_user.id)
+    return render_template('users/index.html', user=current_user, books=books)
 
 # logout endpoint
 @app.route('/sair/')
