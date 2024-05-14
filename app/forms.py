@@ -1,6 +1,6 @@
-from extensions import FlaskForm, bcrypt, db
+from extensions import FlaskForm, bcrypt, db, current_user
 from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
 from .models import Users, Books
 
 
@@ -50,7 +50,7 @@ class BookForm(FlaskForm):
     titulo = StringField('Título', validators=[DataRequired()])
     categoria = StringField('Gênero', validators=[DataRequired()])
     descricao = TextAreaField('Descrição', validators=[DataRequired()])
-    rate = SelectField('Classificação', validators=[DataRequired()])
+    rate = SelectField('Classificação', validators=[DataRequired(), NumberRange(min=1,max=5)], coerce=int, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
     btnSubmit = SubmitField('Cadastrar')
 
     def save (self):
@@ -59,9 +59,10 @@ class BookForm(FlaskForm):
             titulo = self.titulo.data,
             categoria=self.categoria.data,
             descricao=self.descricao.data,
-            rate=self.rate.data
+            rate=self.rate.data,
+            user_id=current_user.id
         )
         db.session.add(book)
         db.session.commit()
 
-        return book
+        

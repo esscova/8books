@@ -1,0 +1,23 @@
+<form action="{{url_for('add_books')}}" method="post" class="mt-4 p-4 card">
+    <h2 class="mb-3">Registrar novo livro</h2>
+    
+    {{form.csrf_token}}
+
+    {{ form.autor.label() }}
+    {{ form.autor(class='form-control') }}
+
+    {{ form.titulo.label() }}
+    {{ form.titulo(class='form-control') }}
+
+    {{ form.categoria.label() }}
+    {{ form.categoria(class='form-control') }}
+
+    {{ form.descricao.label() }}
+    {{ form.descricao(class='form-control') }}
+
+    {{ form.rate.label() }}
+    {{ form.rate(class='form-control') }}
+
+    {{ form.btnSubmit (class='btn btn-success mt-3') }}
+
+</form>

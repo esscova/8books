@@ -1,5 +1,5 @@
 from app import app
-from app.forms import UserForm, LoginForm
+from app.forms import UserForm, LoginForm, BookForm
 from extensions import login_user, login_required, logout_user, current_user
 from flask import render_template, redirect, url_for
 
@@ -20,7 +20,7 @@ def cadastrar ():
 
         return redirect( url_for('home') )
     
-    return render_template('_partials/cadastrar.html', form=form)
+    return render_template('_partials/form-cadastrar-usuario.html', form=form)
 
 # login endpoint
 @app.route('/login/', methods=['GET', 'POST'])
@@ -35,7 +35,7 @@ def login ():
 
         return redirect(url_for('home'))
 
-    return render_template('_partials/login.html', form=form)
+    return render_template('_partials/form-login.html', form=form)
 
 # user home endpoint
 @app.route('/home/')
@@ -49,3 +49,15 @@ def home ():
 def logout ():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/books/novo/', methods=['GET','POST'])
+@login_required
+def add_books ():
+    
+    form = BookForm()
+
+    if form.validate_on_submit():
+        form.save()
+        return redirect(url_for('home'))
+    
+    return render_template('_partials/form-cadastrar-livro.html',form=form)
