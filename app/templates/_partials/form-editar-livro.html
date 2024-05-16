@@ -1,4 +1,4 @@
-<div style="width: 100%; max-width: 600px; margin: 0 auto">
+<!-- <div style="width: 100%; max-width: 600px; margin: 0 auto">
     <form 
         hx-put="{{url_for('editar_livro', book_id=book.id)}}"
         hx-swap="outerHTML"
@@ -31,4 +31,40 @@
             Cancelar
         </a>
     </form>
+</div> -->
+
+<div style="width: 100%; max-width: 600px; margin: 0 auto" class="divEsc">
+    <form 
+        hx-put="{{url_for('editar_livro', book_id=book.id)}}"
+        hx-target="body"      
+        class="mt-4 p-4" 
+    >
+        
+        <h3>Editar</h3>
+        {{form.csrf_token}}
+
+        {{ form.titulo.label() }}
+        {{ form.titulo(class='form-control') }}
+        
+        {{ form.autor.label() }}
+        {{ form.autor(class='form-control') }}
+
+
+        {{ form.categoria.label() }}
+        {{ form.categoria(class='form-control') }}
+
+        {{ form.descricao.label() }}
+        {{ form.descricao(class='form-control') }}
+
+        {{ form.rate.label() }}
+        {{ form.rate(class='form-control') }}
+
+        {{ form.btnSubmit(class='btn btn-success mt-3') }}
+        
+        <a href="{{url_for('home')}}" class="btn btn-outline-danger mt-3 ms-2">
+            <i class="bi bi-arrow-left-circle-fill"></i>
+            Cancelar
+        </a>
+    </form>
 </div>
+

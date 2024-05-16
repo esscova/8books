@@ -6,7 +6,7 @@ from .services import BookService
 
 @app.route('/', methods=['GET','POST'])
 def index ():
-    return render_template('home/index.html')
+    return render_template('/home/index.html')
 
 # create endpoint
 @app.route('/cadastrar/', methods=['GET', 'POST'])
@@ -53,6 +53,7 @@ def logout ():
     logout_user()
     return redirect(url_for('index'))
 
+# create
 @app.route('/books/novo/', methods=['GET','POST'])
 @login_required
 def add_books ():
@@ -65,6 +66,7 @@ def add_books ():
     
     return render_template('_partials/form-cadastrar-livro.html',form=form)
 
+# update
 @app.route('/book/edit/<int:book_id>/', methods=['GET','PUT'])
 @login_required
 def editar_livro (book_id):
@@ -89,12 +91,20 @@ def editar_livro (book_id):
             form.populate_obj(book)
             book_service.update_book(book)
 
-            return render_template('/_partials/book_row.html', book=book)
-            # return redirect(url_for('home'))
+            # livro_data={
+            #     'autor':book.autor,
+            #     'titulo':book.titulo,
+            #     'categoria':book.categoria,
+            #     'descricao':book.descricao,
+            #     'rate':book.rate
+            # }
+            # return jsonify(livro_data)
+            # return render_template('/_partials/book_row.html', book=book)
+            return redirect(url_for('home'))
     return jsonify({'errors': form.errors}), 400
             
            
-    
+ # delete   
 @app.route('/book/delete/<int:book_id>/', methods=['DELETE'])
 @login_required
 def excluir_livro(book_id):
@@ -111,25 +121,3 @@ def excluir_livro(book_id):
         book_service.delete_book(book)
         return ""
 
-@app.route('/get_book/<int:book_id>')
-@login_required
-def get_book(book_id):
-    book_service = BookService()
-    book=book_service.get_book(book_id=book_id)
-    return render_template('_partials/book_row.html', book=book)
-
-@app.route('/get-form/<int:book_id>')
-@login_required
-def get_form(book_id):
-    form=BookService()
-    
-    book_service = BookService()
-    book=book_service.get_book(book_id=book_id)
-
-    form.autor.data = book.autor
-    form.titulo.data = book.titulo
-    form.categoria.data = book.categoria
-    form.descricao.data = book.descricao
-    form.rate.data = book.rate
-
-    render_template('_partials/form-editar-livro.html', book=book, form=form)

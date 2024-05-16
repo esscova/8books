@@ -1,81 +1,103 @@
-{% import 'macros.html' as macro%}
 {% extends 'base.html' %}
 
 {% block title %} 8Books - Home {% endblock %}
-{% block nav %} nav {% endblock %}
-
+{% block nav %}
+{% include 'users/nav.html' %}
+{% endblock %}
 
 {% block content %}
 
 
-    <section class="container mt-5 py-5" id="principal">
-        <div id="teste" style="width: 640px;"></div>
-    
-         <div class="d-flex justify-content-center mb-3">
-            <form class="w-50 me-3" role="search">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-            </form>
-        </div>
+<section class="container mt-5 py-5" id="principal">
 
-        <div class="py-3">
-            <a 
-                href="#" 
-                class="btn btn-secondary" 
-                hx-get="{{ url_for('add_books') }}"
-                hx-target="#principal"
-                >
-                Adicionar livro
-            </a>
-            <hr>
-        </div>
+    <div class="d-flex justify-content-center mb-3" id="formEdit">
+        <form class="w-50 me-3" role="search">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        </form>
+    </div>
 
-        <!-- Tabela de registros -->
-        <table class="table text-align-center">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Autor</th>
-                    <th scope="col">Gênero</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Classificação</th>
-                    <th scope="col">Ação</th>
-                </tr>
-            </thead>
-            <tbody id="new-book" hx-target="closest tr" hx-swap="outerHTML swap:0.3s">
-                {% for book in books %}
-                    <tr id="livro-{{book.id}}">
-                        <td>{{ book.id }}</td>
-                        <td>{{ book.titulo }}</td>
-                        <td>{{ book.autor }}</td>
-                        <td>{{ book.categoria }}</td>
-                        <td>{{ book.descricao }}</td>
-                        <td>{{ book.rate }}</td>
-                        <td>
-                            <button 
-                                class="btn btn-warning"
-                                hx-get="{{url_for('editar_livro', book_id=book.id)}}"
-                                hx-target=".teste"
-                                
-                                >Edit
-                            </button>
-                            <button 
-                                class="btn btn-danger"
-                                type="button"
-                                hx-delete="{{url_for('excluir_livro', book_id=book.id)}}"
-                                hx-confirm="Tem certeza que deseja excluir este livro?"
-                                
-                                >Del
-                            </button>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
-    </section>
-    <div class="teste"></div>
-    
-    
+    <div class="py-3">
+        <a 
+            href="#" 
+            class="btn btn-secondary mb-3" 
+            hx-get="{{ url_for('add_books') }}" 
+            hx-target="#form-modal"
+            data-bs-toggle="modal" 
+            data-bs-target="#Modal" 
+            >
+            Adicionar livro
+        </a>
+    </div>
+
+    <!-- Tabela de registros -->
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Título</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Gênero</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Classificação</th>
+                <th scope="col">Ação</th>
+            </tr>
+        </thead>
+        <tbody 
+            id="new-book" 
+            class="table-group-divider"
+            hx-target="closest tr" 
+            hx-swap="outerHTML swap:0.3s"
+            >            
+            {% for book in books %}
+            <tr id="livro-{{book.id}}">
+                <td>{{ book.id }}</td>
+                <td>{{ book.titulo }}</td>
+                <td>{{ book.autor }}</td>
+                <td>{{ book.categoria }}</td>
+                <td class="text-truncate" style="max-width: 150px;">{{ book.descricao }}</td>
+                <td>{{ book.rate }}</td>
+                <td>
+
+                    <button 
+                        hx-get="{{url_for('editar_livro', book_id=book.id)}}" hx-trigger="click"
+                        hx-target="#form-modal" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#Modal" 
+                        type="button"
+                        class="btn btn-warning"
+                        >
+                        Editar
+                    </button>
+                    
+                    <button 
+                        class="btn btn-danger" 
+                        type="button"
+                        hx-delete="{{url_for('excluir_livro', book_id=book.id)}}"
+                        hx-confirm="Tem certeza que deseja excluir este livro?"
+                        >
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</section>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="form-modal"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 {% endblock %}
