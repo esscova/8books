@@ -50,8 +50,8 @@ class BookForm(FlaskForm):
     titulo = StringField('Título', validators=[DataRequired()])
     categoria = StringField('Gênero', validators=[DataRequired()])
     descricao = TextAreaField('Descrição', validators=[DataRequired()])
-    rate = SelectField('Classificação', validators=[DataRequired(), NumberRange(min=1,max=5)], coerce=int, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
-    btnSubmit = SubmitField('Cadastrar')
+    rate = SelectField('Nota', validators=[DataRequired(), NumberRange(min=1,max=5)], coerce=int, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    btnSubmit = SubmitField('Confirmar')
 
     def save (self):
         book = Books(

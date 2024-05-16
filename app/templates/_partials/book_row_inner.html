@@ -1,0 +1,15 @@
+<!-- _book_row_inner.html -->
+<td>{{ book.id }}</td>
+<td>{{ book.titulo }}</td>
+<td>{{ book.autor }}</td>
+<td>{{ book.categoria }}</td>
+<td>{{ book.descricao }}</td>
+<td>{{ book.rate }}</td>
+<td>
+    <button class="btn btn-warning btn-editar" hx-get="/book/edit/{{ book.id }}/" hx-target="#principal">
+        Edit
+    </button>
+    <button class="btn btn-danger btn-excluir" hx-delete="/book/delete/{{ book.id }}/" hx-confirm="Tem certeza que deseja excluir este livro?">
+        Del
+    </button>
+</td>
